@@ -7,7 +7,7 @@ var scoreElement;
 var snake;
 var food;
 
-var obstacleLimit = 50;
+var obstacleLimit = 50000;
 var obstacles = [];
 
 var frLimit = 15;
@@ -64,29 +64,31 @@ function createFood(){
     var y;
     var inside = true;
     while(inside){
-        var x = Math.floor(Math.random() * Math.floor(lenX));
+        x = Math.floor(Math.random() * lenX);
         x = Math.floor(x / vel) * vel;
         
-        var y = Math.floor(Math.random() * Math.floor(lenY));
+        y = Math.floor(Math.random() * lenY);
         y = Math.floor(y / vel) * vel;
-        
-        // check if it is on the snake
         
         inside = false;
         
-        snake.parts.every(part =>{
-            if(x == part.x && y == part.y){
+        // check if it is on the snake
+        for(var i=0;i<snake.parts.length;i++){
+            if(x == snake.parts[i].x && y == snake.parts[i].y){
                 inside = true;
-                return false;
+                console.log("food on the snake: " + x + " - " + y);
+                break;
             }
-        });
+        }
         
-        obstacles.every(obstacle => {
-            if(x == obstacle.x && y == obstacle.y){
+        // check if it is on an obstacle
+        for(var i=0;i<obstacles.length;i++){
+            if(x == obstacles[i].x && y == obstacles[i].y){
                 inside = true;
-                return false;
+                console.log("food on an obstacle: " + x + " - " + y);
+                break;
             }
-        });
+        }
         
     }
     
@@ -97,30 +99,35 @@ function createFood(){
 }
 
 function createAndPushObstacle(){
-    
+        
     if(obstacles.length == obstacleLimit) return;
     
     var x;
     var y;
     var inside = true;
     while(inside){
-        x = Math.floor(Math.random() * Math.floor(lenX));
+        x = Math.floor(Math.random() * lenX);
         x = Math.floor(x / vel) * vel;
             
-        y = Math.floor(Math.random() * Math.floor(lenY));
+        y = Math.floor(Math.random() * lenY);
         y = Math.floor(y / vel) * vel;
             
-        // check if it is on the snake
         inside = false;
-        snake.parts.every(part => {
-            if(x == part.x && y == part.y){
+        
+        // check if it is on the snake
+        for(var i=0;i<snake.parts.length;i++){
+            if(x == snake.parts[i].x && y == snake.parts[i].y){
                 inside = true;
-                return false;
+                console.log("obstacle on the snake: " + x + " - " + y);
+                break;
             }
-        });
+        }
             
         // check if it is on the food
-        if(x == food.x && y == food.y) inside = true;    
+        if(x == food.x && y == food.y){
+            console.log("obstacle on the food: " + x  + " - " + y);
+            inside = true;   
+        }
     }
     
     obstacles.push(createVector(x,y));
