@@ -8,8 +8,10 @@ Therefore, it has everything for a basic snake game.
 
 ### How to Play
 
-Keyboard arrows for directions
-Space button for stopping
+Keyboard arrows for directions, Space button for pausing.
+
+### Environment
+https://eabx2.github.io/snake101/
 
 ### Screenshots
 
